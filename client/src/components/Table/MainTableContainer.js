@@ -1,7 +1,7 @@
+import React from 'react'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
-// import MainTable from './MainTable';
+import { useNavigate } from 'react-router-dom';
 import TableBodyContent from './TableBodyContent';
 
 function createData(name, price, exchange, dividend, time) {
@@ -9,20 +9,28 @@ function createData(name, price, exchange, dividend, time) {
 }
 
 const MainTableContainer = () => {
-  
-  const tickersData = useSelector(store => store.tickers.data);
+  const navigate = useNavigate();
 
-  const dataRow = tickersData.map(data => {
-     const {ticker, exchange, price, change, change_percent, dividend, last_trade_time} = data;
+  const tickersData = useSelector(store => store.tickers?.data);
+
+  const dataRow = tickersData?.map(data => {
+     const {ticker, exchange, price, dividend, last_trade_time} = data;
 
       return createData(ticker, price, exchange, dividend, last_trade_time)
 
    })
+
+   const tableSX = {
+    cursor: 'pointer',
+    "&:hover": {
+      backgroundColor: '#e0e3e6'
+    },
+  };
  
   return (
     <>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{ maxWidth: 750 }}>
+      <Table  aria-label="simple table">
         <TableHead>
           <TableRow >
             <TableCell align="center" colSpan={1}>
@@ -33,9 +41,16 @@ const MainTableContainer = () => {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-        {dataRow && dataRow.map((el, i) => <TableBodyContent key={i} row={el}/>)}
-        </TableBody>
+        {dataRow && dataRow.map((el, i) => (
+        <TableBody 
+          sx={tableSX}
+          key={i} 
+          onClick={() => navigate(`/ticker/${el.name}`)} >
+
+          <TableBodyContent row={el} />
+
+          </TableBody>
+        ) )}
       </Table>
     </TableContainer>
     </>

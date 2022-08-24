@@ -6,4 +6,9 @@ export const store = configureStore({
   reducer: {
     tickers: tickersReducer
   },
+
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 })

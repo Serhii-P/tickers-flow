@@ -5,15 +5,10 @@ export const tickersDataSlice = createSlice({
     name: 'tickers',
     initialState: {
       data: [],
-      error: '',
       currentTicker: [],
-     // interval: 15,
       status: '',
     },
     reducers: {
-        // setStock: (state, action) => {
-        //     state.data.push(action.payload);
-        // },
         setCurrTicker: (state, action) => {
             state.currTicker = action.payload;
         },
@@ -24,24 +19,13 @@ export const tickersDataSlice = createSlice({
         setError: (state, action) => {
           state.error = action.payload 
         },
-      //   setInterval: (state, action) => {
-      //     state.interval = action.payload
-      // },
-      // setTickerStatus: (state, action) => {
-      //   state.isTickerActive = !state.isTickerActive
-      // },
 
       setCurrentTicker: (state, action) => {
           state.currentTicker = action.payload;
       }
     },
     extraReducers: {
-      // [fetchData.pending]: (state, action) => {
-      //   state.status = 'loading';
-      //    state.data = []
-       // },
       [fetchData.fulfilled]: (state, action) => {
-        state.status = 'success';
         if (state.currentTicker.length > 0) {
 
           const filteredData = action.payload.filter(item => (

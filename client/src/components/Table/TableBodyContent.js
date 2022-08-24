@@ -1,18 +1,10 @@
-import React, { useEffect, useRef } from 'react'
-import { TableBody, TableCell, TableRow } from '@mui/material'
+import React from 'react'
+import { TableCell, TableRow } from '@mui/material'
 import SouthIcon from '@mui/icons-material/South';
 import NorthIcon from '@mui/icons-material/North';
-
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
+import usePrevious from '../../helpers/usePreviousValue';
 
 const TableBodyContent = ({row}) => {
-
    const prevAmount = usePrevious(row);
 
   const priceIndicator =  prevAmount?.price < row?.price ? 'inc' :  'dec';
@@ -38,7 +30,6 @@ const TableBodyContent = ({row}) => {
             <NorthIcon fontSize="small"/> :
             <SouthIcon fontSize="small"/>
           }
-          
           {row.price}</TableCell>
         <TableCell align="right">{row.exchange}</TableCell>
         <TableCell 

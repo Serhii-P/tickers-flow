@@ -7,9 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { FormControl, FormControlLabel, FormGroup, Switch } from '@mui/material';
-import { filterTickers, setCurrentTicker, setTickerStatus } from '../../redux/tickersData/tickersDataSlice';
+import { useDispatch } from 'react-redux';
+import { FormControl, FormControlLabel, FormGroup, Switch, Typography } from '@mui/material';
+import {  setCurrentTicker } from '../../redux/tickersData/tickersDataSlice';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -25,10 +25,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
+  '& th, & td' : {
+    padding: '5px 15px'
+  }
 }));
 
 function createData(name, id) {
@@ -49,7 +51,6 @@ const ControlSwitchPanel = () => {
   const dispatch = useDispatch()
 
 const [name, setName] = React.useState([]);
-console.log(name);
 React.useEffect(() => {
   dispatch(setCurrentTicker(name))
 
@@ -58,20 +59,21 @@ React.useEffect(() => {
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   const changeHandler = (id) => {
-
     if (name.includes(id)) {
       const newList = name.filter((item) => item !== id);
       return setName(newList);
     }
-
     setName(prevName => {
      return [...prevName, id]
     })
 
   }
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ maxWidth: 200 }} aria-label="customized table">
+    <TableContainer component={Paper} sx={{ maxWidth: 280 }}>
+      <Typography variant="h6" gutterBottom align="center" sx={{ my: 1 }}>
+          Stop flow
+        </Typography>
+      <Table  aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Company</StyledTableCell>
@@ -85,7 +87,7 @@ React.useEffect(() => {
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell component="th" scope="row">
+              <StyledTableCell component="th" sx={{padding: '0'}} scope="row">
                 {row.id}
               </StyledTableCell>
                <StyledTableCell align="right">

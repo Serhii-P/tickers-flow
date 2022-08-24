@@ -10,30 +10,6 @@ export const socketConnect = () => (dispatch) => {
        socket.on('ticker', (data) =>  dispatch(fetchData(data)));
   }
 
- // -------
-//  export const socketConnect = (data) => (dispatch) => {
-//   dispatch({
-//      type: "GET_DATA",
-//      payload: data,
-//   });
-// };
-
-  // export const fetchStocksPause = () => {
-  //   socket.off('ticker')
-  // };
-
-  // export const socketResume = () => {
-  //   socket.removeAllListeners();
-  //    socket.emit("start");
-  // };
-
-//   export const setSocketInterval = () => {
-//     let count = 2000;
-//     setInterval(() => {
-//       socket.volatile.emit("ping", count);
-//     }, count);
-//   }
-
  export const fetchData = createAsyncThunk(
      'data/asyncData',
   async (data) => (data)
